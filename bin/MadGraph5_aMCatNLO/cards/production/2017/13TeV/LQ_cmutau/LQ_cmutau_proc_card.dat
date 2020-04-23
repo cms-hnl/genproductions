@@ -1,0 +1,4 @@
+import model LeptoQ_UFO
+generate p p > t t~, (t > b w+, w+ > all all), t~ > c~ ta+ mu-
+add process p p > t t~, t > c ta- mu+, (t~ > b~ w-, w- > all all)
+output LQ_cmutau

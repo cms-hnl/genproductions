@@ -7,12 +7,12 @@ class PDFSetHelper(object):
         if self.pdflist_file:
             self.readPDFsFromFile()
 
-    def readDefaultPDFsFile(self, is5FlavorScheme):
-        base_dir = os.path.dirname(os.path.realpath(__file__)) 
-        meta_data_dir = base_dir.replace("Utilities/scripts", "MetaData") 
-
-        self.pdflist_file = meta_data_dir + "/" + ("pdflist_5f_2017.dat" \
-            if is5FlavorScheme else "pdflist_4f_2017.dat")
+    def readDefaultPDFsFile(self, era, is5FlavorScheme):
+        base_dir = os.path.dirname(os.path.realpath(__file__))
+        meta_data_dir = base_dir.replace("Utilities/scripts", "MetaData")
+        nf = 5 if is5FlavorScheme else 4
+        file = 'pdflist_{}f_{}.dat'.format(nf, era)
+        self.pdflist_file = os.path.join(meta_data_dir, file)
         self.readPDFsFromFile()
 
     def readPDFsFromFile(self):
@@ -26,7 +26,7 @@ class PDFSetHelper(object):
 
     def getPDFData(self):
         return self.pdf_data
-        
+
 class PDFSetHelper_MG5_aMC(PDFSetHelper):
     def __init__(self, pdflist_file=None):
         super(PDFSetHelper_MG5_aMC, self).__init__(pdflist_file)

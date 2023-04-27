@@ -58,6 +58,7 @@ make_gridpack () {
 
     echo "name: ${name}"
     echo "carddir: ${carddir}"
+    echo "era: ${era}"
     echo "queue: ${queue}"
     echo "scram_arch: ${scram_arch}"
     echo "cmssw_version: ${cmssw_version}"
@@ -443,7 +444,7 @@ make_gridpack () {
       fi
     fi
 
-    prepare_run_card $name $CARDSDIR $is5FlavorScheme $script_dir $isnlo
+    prepare_run_card $name $CARDSDIR $is5FlavorScheme $script_dir $isnlo $era
 
     #copy provided custom fks params or cuts
     if [ -e $CARDSDIR/${name}_cuts.f ]; then
@@ -617,7 +618,7 @@ make_gridpack () {
       pdfExtraArgs+="--is5FlavorScheme "
     fi
 
-    pdfSysArgs=$(python ${script_dir}/getMG5_aMC_PDFInputs.py -f systematics -c 2017 $pdfExtraArgs)
+    pdfSysArgs=$(python ${script_dir}/getMG5_aMC_PDFInputs.py -f systematics -c $era $pdfExtraArgs)
     sed -i s/PDF_SETS_REPLACE/${pdfSysArgs}/g runcmsgrid.sh
 
 
@@ -657,11 +658,12 @@ name=${1}
 # name of the run
 carddir=${2}
 
+era=${3}
 # which queue
-queue=${3}
+queue=""
 
 # processing options
-jobstep=${4}
+jobstep=""
 
 # sync default cmssw with the current OS
 export SYSTEM_RELEASE=`cat /etc/redhat-release`
